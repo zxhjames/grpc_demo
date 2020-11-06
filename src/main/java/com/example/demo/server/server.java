@@ -2,9 +2,9 @@ package com.example.demo.server;
 
 import io.grpc.Server;
 import io.grpc.ServerBuilder;
-import io.grpc.justtest.GreeterGrpc;
-import io.grpc.justtest.TestRequest;
-import io.grpc.justtest.TestResponse;
+import io.grpc.add.AddRequest;
+import io.grpc.add.AddResponse;
+import io.grpc.add.GreeterGrpc;
 import io.grpc.stub.StreamObserver;
 
 import java.io.IOException;
@@ -44,12 +44,11 @@ public class server {
             server.awaitTermination();
         }
     }
-
     //实现服务接口的类
     private class GreeterImpl extends GreeterGrpc.GreeterImplBase {
         @Override
-        public void testSomeThing(TestRequest request, StreamObserver<TestResponse> responseObserver) {
-            TestResponse build = TestResponse.newBuilder().setMessage(request.getNum1() + request.getNum2()).build();
+        public void remoteAdd(AddRequest request, StreamObserver<AddResponse> responseObserver) {
+            AddResponse build = AddResponse.newBuilder().setAnswer(request.getNum1() + request.getNum2()).build();
             //onNext()方法向客户端返回结果
             System.out.println("服务端已经接受");
             responseObserver.onNext(build);
@@ -57,6 +56,7 @@ public class server {
             responseObserver.onCompleted();
         }
     }
+
 
     public static void main(String[] args) throws IOException, InterruptedException {
         final  server server=new server();

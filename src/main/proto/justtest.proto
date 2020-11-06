@@ -1,24 +1,22 @@
 syntax = "proto3"; //协议版本号
 
 option java_multiple_files = true;
-option java_package = "io.grpc.justtest";
-option java_outer_classname = "JustTestProto";
-option objc_class_prefix = "WY";
+option java_package = "io.grpc.add";
+option java_outer_classname = "remote_add_service";
 
-package onlytest; // 包名
+package Test; // 包名
 
 //定义服务
 service Greeter {
   //注意：这里是returns 不是return
-  rpc TestSomeThing (TestRequest) returns (TestResponse) {
-  }
+  rpc RemoteAdd (AddRequest) returns (AddResponse) {}
 }
 //定义消息类型
-message TestRequest {
+message AddRequest {
   int32 num1 = 1;
   int32 num2 = 2;
 }
-message TestResponse {
-  int32 message = 1;
+message AddResponse {
+  int32 answer = 1;
 }
 
